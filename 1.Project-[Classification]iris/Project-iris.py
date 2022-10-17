@@ -34,7 +34,7 @@ Six-step ML project template:
 
 # 1.1 Load libraries
 from pandas import read_csv
-from pandas.tools.plotting import scatter_matrix
+from pandas.plotting import scatter_matrix
 from matplotlib import pyplot
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
@@ -91,7 +91,7 @@ X_train, X_validation, Y_train, Y_validation = train_test_split(X, Y, test_size 
 
 # 3.3 Spot-check algorithms
 models = []
-models.append(('LR', LogisticRegression()))
+models.append(('LR', LogisticRegression(solver='lbfgs', max_iter=1000)))
 models.append(('LDA', LinearDiscriminantAnalysis()))
 models.append(('KNN', KNeighborsClassifier()))
 models.append(('CART', DecisionTreeClassifier()))
@@ -103,7 +103,7 @@ models.append(('SVM', SVC()))
 results = []
 names = []
 for name, model in models:
-    kfold = KFold(n_splits = 10, random_state = seed)
+    kfold = KFold(n_splits = 10)
     cv_results = cross_val_score(model, X_train, Y_train, cv = kfold, scoring = 'accuracy')
     results.append(cv_results)
     names.append(name)
